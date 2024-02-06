@@ -13,7 +13,6 @@ pub mod selection;
 use color_print::cformat;
 use rand::prelude::*;
 use std::fmt::{self, Display, Formatter};
-use std::{thread::sleep, time::Duration};
 
 use action::Action;
 use ai::Ai;

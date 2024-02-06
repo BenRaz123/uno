@@ -7,7 +7,6 @@ use crate::{
     move_result::MoveResult,
     selection::{Selection, SelectionItem},
 };
-use console;
 
 pub struct Player {
     deck: Vec<Card>,

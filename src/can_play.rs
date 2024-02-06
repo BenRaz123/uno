@@ -25,7 +25,7 @@ pub trait CanPlay {
             SelectionItem::Card(card) => card,
         };
 
-        let mut deck = self.get_deck();
+        let deck = self.get_deck();
         
         game.play_card(card);
 
