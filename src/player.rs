@@ -53,15 +53,13 @@ impl CanPlay for Player {
                 SelectionItem::Card(card) => match game.get_top_card() {
                     Some(top_card) => match card.is_playable(top_card) {
                         true => {
-                            let index = options.index;
-                            self.play_card_index(game, index);
+                            self.play_card_selection(game, &options);
                             break;
                         }
                         false => (),
                     },
                     None => {
-                        let index = options.index;
-                        self.play_card_index(game, index);
+                        self.play_card_selection(game, &options);
                         break;
                     }
                 },

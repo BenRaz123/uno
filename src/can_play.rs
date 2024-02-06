@@ -1,5 +1,9 @@
-use crate::{Card, Game, MoveResult, selection::Selection};
+use crate::{
+    selection::{Selection, SelectionItem},
+    Card, Game, MoveResult,
+};
 
+/// Skibidi toilet
 pub trait CanPlay {
     fn get_deck(&mut self) -> &mut Vec<Card>;
 
@@ -11,7 +15,23 @@ pub trait CanPlay {
         deck.remove(index);
         game.play_card(card);
     }
-    
+
+    fn play_card_selection(&mut self, game: &mut Game, selection: &Selection) {
+        let index = selection.index;
+
+        let card = match selection.options[index] {
+            SelectionItem::Draw => unreachable!(),
+            SelectionItem::Quit => unreachable!(),
+            SelectionItem::Card(card) => card,
+        };
+
+        let mut deck = self.get_deck();
+        
+        game.play_card(card);
+
+        deck.remove(index);
+    }
+
     fn play_round(
         &mut self,
         game: &mut Game,

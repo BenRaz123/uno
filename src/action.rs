@@ -4,6 +4,7 @@ use crate::*;
 
 #[derive(PartialOrd, PartialEq, Eq, Ord, Debug, Copy, Clone)]
 /// An action that can be on a card.
+// TODO: Add wild cards + draw cards (never will happen)
 pub enum Action {
     Zero,
     One,
