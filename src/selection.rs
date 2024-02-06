@@ -1,7 +1,7 @@
 use crate::Card;
 
 use color_print::cformat;
-use console::{Term, pad_str};
+use console::{pad_str, Alignment, Term};
 
 use std::fmt::{self, Display, Formatter};
 use std::ops::{AddAssign, SubAssign};
@@ -25,6 +25,7 @@ impl Display for Selection {
                 str.push_str(&cformat!("<bold><u>{option}</></> "));
                 continue;
             }
+
             str.push_str(&format!("{option} "));
         }
         write!(f, "{str}")
@@ -35,8 +36,8 @@ impl Display for SelectionItem {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         let str: String = match self {
             Self::Card(card) => card.to_string(),
-            Self::Draw => String::from("Draw a Card"),
-            Self::Quit => String::from("Quit Game (Irreversible)"),
+            Self::Draw => String::from("Draw"),
+            Self::Quit => String::from("Quit"),
         };
         write!(f, "{str}")
     }
@@ -85,25 +86,30 @@ impl Selection {
         selection.options.push(SelectionItem::Quit);
         selection
     }
-    
-    pub fn update_selection_display(&self, top_card: Option<Card>) {
 
+    pub fn update_selection_display(
+        &self,
+        top_card: Option<Card>,
+        opponent_card_count: u8,
+    ) {
         let card = top_card.clone();
 
+        let card_count = format!("(AI {opponent_card_count}) ");
+
         let preceding = match &card {
-            None => "(No Card)".into(),
-            Some(card) => format!("(Deck: {card})"),
+            None => "".into(),
+            Some(card) => format!("(Deck: {card}) "),
         };
-        
-        let string = center_string(&format!("{preceding} {self}"));        
+
+        let string = center_string(&format!("{card_count}{preceding}{self}"));
 
         print!("{}[2J", 27 as char);
         println!("{string}");
     }
-    
-    pub fn prompt(&mut self, top_card: Option<Card>) {
+
+    pub fn prompt(&mut self, top_card: Option<Card>, opponent_card_count: u8) {
         let stdout = console::Term::buffered_stdout();
-        self.update_selection_display(top_card);
+        self.update_selection_display(top_card, opponent_card_count);
         loop {
             if let Ok(c) = stdout.read_char() {
                 match c {
@@ -112,15 +118,26 @@ impl Selection {
                     '\n' => return,
                     _ => (),
                 }
-                self.update_selection_display(top_card);
+                self.update_selection_display(top_card, opponent_card_count);
             }
         }
     }
 }
 
 fn center_string(s: &str) -> String {
+    let mut string = String::new();
+    
     let width = Term::stdout().size().1;
     let height = Term::stdout().size().0;
 
-    pad_str(s, width as usize, console::Alignment::Center, None).into()
+    let align = Alignment::Center;
+    let truncate = None;
+
+    string.push_str(&pad_str(s, width as usize, align, truncate).to_string());
+
+    for _ in 0..height / 2 - 1 {
+        string.push('\n');
+    }
+
+    string
 }

@@ -12,9 +12,14 @@ impl CanPlay for Ai {
         return &mut self.deck
     }
 
+    fn get_card_count(&self) -> u8 {
+        self.deck.len() as u8
+    }
+
     fn play_round(
             &mut self,
             game: &mut Game,
+            _opponent_card_count: u8,
             last_move_result: &MoveResult,
         ) -> MoveResult {
 

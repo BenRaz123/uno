@@ -31,8 +31,8 @@ fn main() {
     let mut last_result = MoveResult::None;
     
     while let MoveResult::None = last_result {
-        last_result = player.play_round(&mut game, &last_result);
-        last_result = ai.play_round(&mut game, &last_result);
+        last_result = player.play_round(&mut game, ai.get_card_count(), &last_result);
+        last_result = ai.play_round(&mut game, player.get_card_count(), &last_result); 
     }
 
     println!("Ai Won!");

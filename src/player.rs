@@ -29,14 +29,20 @@ impl CanPlay for Player {
     fn get_deck(&mut self) -> &mut Vec<Card> {
         &mut self.deck
     }
+
+    fn get_card_count(&self) -> u8 {
+        self.deck.len() as u8
+    }
+
     fn play_round(
         &mut self,
         game: &mut Game,
+        opponent_card_count: u8,
         _last_move_result: &MoveResult,
     ) -> MoveResult {
         let mut options = Selection::from_deck(self.deck.to_owned());
         loop {
-            options.prompt(game.get_top_card());
+            options.prompt(game.get_top_card(), opponent_card_count);
             let selected = &options.options[options.index];
             match selected {
                 SelectionItem::Draw => {
