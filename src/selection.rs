@@ -22,11 +22,11 @@ impl Display for Selection {
         let mut str = String::new();
         for (index, option) in self.options.iter().enumerate() {
             if index == self.index {
-                str.push_str(&cformat!("<bold><u>{option}</></> "));
+                str.push_str(&cformat!("<bold><u>{}</></> ", option));
                 continue;
             }
 
-            str.push_str(&format!("{option} "));
+            str.push_str(&format!("{} ", option));
         }
         write!(f, "{str}")
     }
@@ -92,7 +92,7 @@ impl Selection {
         top_card: Option<Card>,
         opponent_card_count: u8,
     ) {
-        let card = top_card.clone();
+        let card = top_card;
 
         let card_count = format!("(AI {opponent_card_count}) ");
 
@@ -133,7 +133,7 @@ fn center_string(s: &str) -> String {
     let align = Alignment::Center;
     let truncate = None;
 
-    string.push_str(&pad_str(s, width as usize, align, truncate).to_string());
+    string.push_str(pad_str(s, width as usize, align, truncate).as_ref());
 
     for _ in 0..height / 2 - 1 {
         string.push('\n');

@@ -9,7 +9,7 @@ pub struct Ai {
 
 impl CanPlay for Ai {
     fn get_deck(&mut self) -> &mut Vec<Card> {
-        return &mut self.deck
+        &mut self.deck
     }
 
     fn get_card_count(&self) -> u8 {
@@ -29,7 +29,7 @@ impl CanPlay for Ai {
             return MoveResult::None;
         }
 
-        if let None = game.get_top_card() {
+        if game.get_top_card().is_none() {
             self.play_card_index(game, 0)
         }
 

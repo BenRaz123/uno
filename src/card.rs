@@ -23,13 +23,12 @@ impl Card {
 
     pub const COLORS: [Color; 4] =
         [Color::Red, Color::Green, Color::Blue, Color::Yellow];
-    
+
     /// Checks whether self can be played by the argument to this fn
     pub fn is_playable(&self, card_on_deck: Self) -> bool {
-        return self.action == card_on_deck.action
-            || self.color == card_on_deck.color;
+        self.action == card_on_deck.action || self.color == card_on_deck.color
     }
-    
+
     /// For debugging purposes
     pub fn format_deck(deck: Vec<Self>) -> String {
         let mut str = String::new();
@@ -38,7 +37,7 @@ impl Card {
             str.push_str(&format!("{card} "))
         }
 
-        format!("{str}")
+        str
     }
 
     pub fn new(color: Color, action: Action) -> Self {
@@ -68,10 +67,10 @@ impl Display for Card {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         let action = &self.action;
         let string = match self.color {
-            Color::Red => cformat!("<red>[{action}]</>"),
-            Color::Green => cformat!("<green>[{action}]</>"),
-            Color::Blue => cformat!("<blue>[{action}]</>"),
-            Color::Yellow => cformat!("<yellow>[{action}]</>"),
+            Color::Red => cformat!("<red>[{}]</>", action),
+            Color::Green => cformat!("<green>[{}]</>", action),
+            Color::Blue => cformat!("<blue>[{}]</>", action),
+            Color::Yellow => cformat!("<yellow>[{}]</>", action),
         };
 
         write!(f, "{string}")
