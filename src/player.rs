@@ -1,5 +1,7 @@
 use std::process::exit;
 
+const UNICODE_BELL: char = 0x7 as char;
+
 use crate::{
     can_play::CanPlay,
     card::Card,
@@ -55,7 +57,7 @@ impl CanPlay for Player {
                             self.play_card_selection(game, &options);
                             break;
                         }
-                        false => (),
+                        false => print!("{}", UNICODE_BELL),
                     },
                     None => {
                         self.play_card_selection(game, &options);
