@@ -1,4 +1,4 @@
-![screenshot of a typical game]("./assets/screenshot.png")
+![screenshot of a typical game](assets/screenshot.png)
 
 # Uno-CLI
 
