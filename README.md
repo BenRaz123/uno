@@ -33,3 +33,11 @@ To launch, write `uno-cli`. Use WASD/HJKL keys to select cards. A card can be pl
 | <kbd>a</kbd> / <kbd>h</kbd> | Move cursor one to the left |
 | <kbd>d</kbd> / <kbd>l</kbd> | Move cursor one to the right | 
 | <kbd>Enter</kbd> | Select Option |
+
+## Progress
+
+- [x] Get basic game running
+- [ ] Add skip card
+- [ ] Add draw two card
+- [ ] Add wild card
+- [ ] Add wild draw four card
